@@ -2,6 +2,32 @@
 
 ---
 ## Для запуска:
+### 1 - Создать сеть:
 `
-docker compose up --build -d
+make network
 `
+### 2 - Запустить:
+`
+make run
+`
+
+---
+## Пример запроса:
+```
+{
+    "data": 
+        {
+            "headers": "Test",
+            "body": "data" 
+        }
+    
+}
+```
+
+### Запрос должен включать в себя заголовок ``X-Tantum-Authorization``
+
+
+---
+
+## Тестирование RPS:
+![benchmark](https://github.com/Feruz666/aggr/blob/main/static/benchmark.png)

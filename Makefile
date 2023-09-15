@@ -11,7 +11,7 @@ pgdb:
 	@docker exec
 
 network:
-	docker network create aggr-network
+	@docker network create aggr-network
 
 run:
-	docker compose up --build -d
+	@docker compose up --build -d
