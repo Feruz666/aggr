@@ -29,5 +29,5 @@ make run
 
 ---
 
-## Тестирование RPS:
+## Тестирование RPS в apache benchmark:
 ![benchmark](https://github.com/Feruz666/aggr/blob/main/static/benchmark.png)
