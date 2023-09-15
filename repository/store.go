@@ -17,7 +17,7 @@ func NewStore() (*Store, error) {
 	// connect to Postgres
 	pgDB, err := Dial()
 	if err != nil {
-		return nil, fmt.Errorf("pg Dial() failed: %w", err)
+		return nil, fmt.Errorf("[repository.Dial]", "err", err)
 	}
 
 	if pgDB != nil {

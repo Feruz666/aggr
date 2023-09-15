@@ -19,7 +19,11 @@ type ServerConfig struct {
 }
 
 type DatabaseConfig struct {
-	Url string `yaml:"url"`
+	Host     string `yaml:"host"`
+	User     string `yaml:"user"`
+	Password string `yaml:"password"`
+	DbName   string `yaml:"dbName"`
+	Port     string `yaml:"port"`
 }
 
 type RedisConfig struct {

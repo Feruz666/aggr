@@ -1,24 +1,67 @@
-version: '3.8'
+version: "3.0"
+
 
 services:
-    
-  db:
-    image: postgres
-    restart: always
+  client:
+    container_name: client
+    build:
+      dockerfile: Dockerfile.client
+    working_dir: /app
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: aggr
+      - serverAddr=:8080
+      - LOG_LEVEL=debug
     ports:
-      - "5432:5432"
-    volumes:
-      - db-data:/var/lib/postgresql/data
+      - "8080:8080"
+    expose:
+      - 8080
+    networks:
+      - aggr-network
+    depends_on:
+      - redis
+      - postgres
+      - server
+
+
+  server:
+    container_name: server
+    build:
+      dockerfile: Dockerfile.server
+    working_dir: /app
+    restart: unless-stopped
+    environment:
+      - LOG_LEVEL=debug
+    networks:
+      - aggr-network
+    depends_on:
+      - redis
+      - postgres
 
   redis:
+    container_name: redis
     image: redis
     restart: always
-    ports:
-      - "6379:6379"
+    networks:
+      - aggr-network
+    expose:
+      - 6379
 
-volumes:
-  db-data:
+  postgres:
+    container_name: postgres
+    restart: always
+    image: postgres:latest
+    networks:
+      - aggr-network
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=postgres
+    volumes:
+      - /var/lib/postgresql/data
+
+networks:
+  aggr-network:

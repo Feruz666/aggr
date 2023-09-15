@@ -17,7 +17,7 @@ func main() {
 
 	store, err := repository.NewStore()
 	if err != nil {
-		log.Println("repository.NewStore failed")
+		log.Println(" [repository.NewStore] ", " error ", err)
 	}
 	p := worker.TaskProcessor{Store: store}
 

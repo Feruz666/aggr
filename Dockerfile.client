@@ -1,0 +1,19 @@
+# Build stage
+FROM golang:1.20 AS builder
+
+WORKDIR /app
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o client client/main.go
+
+# Final stage
+FROM alpine:latest
+
+WORKDIR /app
+
+COPY --from=builder /app/config.yaml /app/config.yaml
+COPY --from=builder /app/client/ /app/
+
+
+EXPOSE 8080
+CMD ["/app/main"]
